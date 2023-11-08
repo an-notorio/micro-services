@@ -34,6 +34,20 @@ This project demonstrates inter-service communication using OpenFeign, a declara
 
 The project showcases the use of Zipkin for distributed tracing, enhancing application observability and enabling the visualization and troubleshooting of latency issues.
 
+## Security
+
+### Spring Security
+
+The project use the JWT authentication method for access in secured endpoint using an access token and a resfresh token
+
+### Login
+
+The project allows the registration of a user with confirmation via email and the reset of the password in case it has been forgotten.
+
+### Spring Mail
+
+For managed every email process, the project use spring mail with a configuration of SMTP server. The provider used is Gmail.
+
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE.txt).
