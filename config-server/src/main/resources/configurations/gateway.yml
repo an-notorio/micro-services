@@ -1,0 +1,50 @@
+#eureka:
+ # client:
+  #  register-with-eureka: false
+server:
+  port: 8222
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: students
+          uri: http://localhost:8090
+          predicates:
+            - Path=/api/students/**
+          filters:
+            - AuthenticationFilter
+        - id: schools
+          uri: http://localhost:8070
+          predicates:
+            - Path=/api/schools/**
+          filters:
+            - AuthenticationFilter
+        - id: authenticator
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/**
+
+application:
+  security:
+    jwt:
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+      secret-key: 44993b7ba1f547e5c2dce92e3f341c63e1631793a7e8490e53a2c0d4b2613f17
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

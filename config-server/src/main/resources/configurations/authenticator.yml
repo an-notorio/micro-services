@@ -1,0 +1,40 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+application:
+  security:
+    jwt:
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+      secret-key: 44993b7ba1f547e5c2dce92e3f341c63e1631793a7e8490e53a2c0d4b2613f17
+server:
+  port: 8081
+spring:
+  datasource:
+    password: postgres
+    url: jdbc:postgresql://localhost:5433/login
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    password: ''
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: ''
