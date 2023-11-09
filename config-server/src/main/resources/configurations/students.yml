@@ -13,9 +13,9 @@ spring:
     name: students
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/students
+    url: jdbc:postgresql://localhost:5432/student
     username: postgres
-    password: postgres
+    password: Pa55word
   jpa:
     hibernate:
       ddl-auto: create
@@ -30,3 +30,15 @@ management:
   tracing:
     sampling:
       probability: 1.0
+
+
+openapi:
+  service:
+    title: students doc #title that you will want to display in the swagger ui
+    version: 1.0.0
+    url: http://localhost:8222 #api gateway url
+springdoc:
+  api-docs:
+    path: /students/v3/api-docs
+  swagger-ui:
+    path: /students/swagger-ui.html

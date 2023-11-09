@@ -16,8 +16,8 @@ server:
   port: 8081
 spring:
   datasource:
-    password: postgres
-    url: jdbc:postgresql://localhost:5433/login
+    password: Pa55word
+    url: jdbc:postgresql://localhost:5432/login
     username: postgres
   jpa:
     hibernate:
@@ -38,3 +38,14 @@ spring:
           starttls:
             enable: true
     username: ''
+
+openapi:
+  service:
+    title: authenticator doc #title that you will want to display in the swagger ui
+    version: 1.0.0
+    url: http://localhost:8222 #api gateway url
+springdoc:
+  api-docs:
+    path: /authenticator/v3/api-docs
+  swagger-ui:
+    path: /authenticator/swagger-ui.html
