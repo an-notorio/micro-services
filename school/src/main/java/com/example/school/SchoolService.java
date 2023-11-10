@@ -1,7 +1,9 @@
 package com.example.school;
 
 import com.example.school.client.StudentClient;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,7 @@ public class SchoolService {
         return repository.findAll();
     }
 
-    public FullSchoolResponse findSchoolsWithStudents(Integer schoolId) {
+    public FullSchoolResponse findSchoolsWithStudents(Integer schoolId, HttpServletRequest request) {
         var school = repository.findById(schoolId)
                 .orElse(
                         School.builder()
@@ -29,7 +31,8 @@ public class SchoolService {
                                 .email("NOT_FOUND")
                                 .build()
                 );
-        var students = client.findAllStudentsBySchool(schoolId);
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        var students = client.findAllStudentsBySchool(schoolId, authHeader);
         return FullSchoolResponse.builder()
                 .name(school.getName())
                 .email(school.getEmail())

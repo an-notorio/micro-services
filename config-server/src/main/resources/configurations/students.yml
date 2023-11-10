@@ -24,7 +24,7 @@ spring:
 
 application:
   config:
-    schools-url: http://localhost:8070/api/schools
+    schools-url: http://localhost:8222/api/schools
 
 management:
   tracing:

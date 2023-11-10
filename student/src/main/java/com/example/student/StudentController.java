@@ -2,6 +2,7 @@ package com.example.student;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,10 @@ public class StudentController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> save(
-            @RequestBody Student student
+            @RequestBody Student student,
+            HttpServletRequest request
     ){
-        return service.saveStudent(student);
+        return service.saveStudent(student, request);
     }
 
     @Operation(

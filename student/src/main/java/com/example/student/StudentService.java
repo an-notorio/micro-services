@@ -1,7 +1,9 @@
 package com.example.student;
 
 import com.example.student.client.SchoolClient;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,9 +25,10 @@ public class StudentService {
         return repository.findAllBySchoolId(schoolId);
     }
 
-    public ResponseEntity<?> saveStudent(Student student){
+    public ResponseEntity<?> saveStudent(Student student, HttpServletRequest request){
         try{
-            School school= client.findSchoolBySchoolId(student.getSchoolId());
+            final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+            School school= client.findSchoolBySchoolId(student.getSchoolId(), authHeader);
             if(school.getId().describeConstable().isPresent()){
                 repository.save(student);
                 return ResponseEntity.ok("Student saved");

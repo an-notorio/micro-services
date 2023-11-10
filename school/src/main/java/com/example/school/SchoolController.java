@@ -2,6 +2,7 @@ package com.example.school;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,9 +45,10 @@ public class SchoolController {
     )
     @GetMapping("/with-students/{school-id}")
     public ResponseEntity<FullSchoolResponse> findAllSchools(
-            @PathVariable("school-id") Integer schoolId
+            @PathVariable("school-id") Integer schoolId,
+            HttpServletRequest request
     ) {
-        return ResponseEntity.ok(service.findSchoolsWithStudents(schoolId));
+        return ResponseEntity.ok(service.findSchoolsWithStudents(schoolId, request));
     }
 
     @Operation(
