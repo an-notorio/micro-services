@@ -16,7 +16,7 @@ import java.util.List;
 
 @OpenAPIDefinition
 @Configuration
-@Profile({"local", "dev"})
+//@Profile({"local", "dev"})
 public class OpenApiConfigs {
     @Bean
     public OpenAPI customOpenAPI(
