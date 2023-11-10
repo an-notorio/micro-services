@@ -109,7 +109,7 @@ public class JwtService {
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 30))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 480))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
 
@@ -123,7 +123,7 @@ public class JwtService {
 
         var resetPsw = ResetPsw.builder()
                 .resetToken(jwts)
-                .expireAt(LocalDateTime.now().plusSeconds(60 * 24))
+                .expireAt(LocalDateTime.now().plusSeconds(60 * 8))
                 .user(user)
                 .build();
 
