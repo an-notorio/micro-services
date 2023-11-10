@@ -1,6 +1,7 @@
 package com.example.authenticator.controller;
 
 import com.example.authenticator.service.AuthenticationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +14,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Tag(name = "Demo")
+@Tag(name = "Demo" , description = "Here you can access to a secured point and find a user")
 @RequestMapping("/demo")
 public class DemoController {
 
     @Autowired
     private AuthenticationService service;
 
-    @GetMapping("/prova")
+    @Operation(
+            summary = "Attempt to access",
+            description = "Try to access in a secured endpoint"
+    )
+    @GetMapping("/trial")
     public ResponseEntity<String> sayHello(){
         return ResponseEntity.ok("Hello from secured endpoint");
     }
 
+    @Operation(
+            summary = "Get a user",
+            description = "Get all information of a user via ID"
+    )
     @GetMapping("/user/{userId}")
     @PreAuthorize("@securityService.hasPermission(#request, #userId)")
     public ResponseEntity<?> getUser(@PathVariable Integer userId, HttpServletRequest request){

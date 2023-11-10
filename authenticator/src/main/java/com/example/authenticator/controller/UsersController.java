@@ -21,7 +21,7 @@ import java.io.IOException;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 //@SecurityRequirement(name = "Bearer Authentication") for a specific controller
-@Tag(name = "User")
+@Tag(name = "User" , description = "Here you can create, update and delete an account")
 public class UsersController {
 
     private final AuthenticationService service;
@@ -92,11 +92,6 @@ public class UsersController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/prova")
-    public ResponseEntity<?> getProva() {
-        String x = "ciao prova riuscita";
-        return new ResponseEntity<> (x,HttpStatus.OK);
-    }
     @Secured("ADMIN")
     @GetMapping("/getUsersTrue")
     @Operation(

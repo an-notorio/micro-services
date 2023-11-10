@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/schools")
 @RequiredArgsConstructor
-@Tag(name = "Schools")
+@Tag(name = "Schools" , description = "Here you can save, retrieve and get more info on school")
 public class SchoolController {
 
     private final SchoolService service;
