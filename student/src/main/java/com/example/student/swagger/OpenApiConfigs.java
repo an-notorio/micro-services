@@ -20,7 +20,7 @@ import java.util.List;
 public class OpenApiConfigs {
     @Bean
     public OpenAPI customOpenAPI(
-            @Value("students doc") String serviceTitle,
+            @Value("OpenApi specification") String serviceTitle,
             @Value("1.0.0") String serviceVersion,
             @Value("http://localhost:8222") String url) {
         final String securitySchemeName = "bearerAuth";
@@ -35,6 +35,6 @@ public class OpenApiConfigs {
                                 .scheme("bearer")
                                 .bearerFormat("JWT")))
                 .security(List.of(new SecurityRequirement().addList(securitySchemeName)))
-                .info(new Info().title(serviceTitle).version(serviceVersion));
+                .info(new Info().title(serviceTitle).version(serviceVersion).description("OpenApi documentation for Student service"));
     }
 }

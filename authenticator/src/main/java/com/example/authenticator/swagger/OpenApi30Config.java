@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
-                description = "OpenApi documentation for Spring Security",
+                description = "OpenApi documentation for Authenticator",
                 title = "OpenApi specification",
                 version = "1.0"
         ),

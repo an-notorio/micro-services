@@ -18,7 +18,7 @@ import java.util.List;
 
 @OpenAPIDefinition(
         info = @Info(
-                description = "OpenApi documentation for Spring Security",
+                description = "OpenApi documentation for School service",
                 title = "OpenApi specification",
                 version = "1.0"
         ),

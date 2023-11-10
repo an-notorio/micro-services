@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "API Gateway", version = "1.0", description = "Documentation API Gateway v1.0"))
+@OpenAPIDefinition(info = @Info(title = "API Gateway", version = "1.0", description = "Documentation API Gateway v1.0 Microservices"))
 public class GatewayApplication {
 
 	public static void main(String[] args) {
