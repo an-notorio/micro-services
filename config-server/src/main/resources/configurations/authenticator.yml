@@ -49,3 +49,8 @@ springdoc:
     path: /authenticator/v3/api-docs
   swagger-ui:
     path: /authenticator/swagger-ui.html
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
