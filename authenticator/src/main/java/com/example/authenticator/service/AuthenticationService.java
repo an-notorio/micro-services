@@ -50,7 +50,7 @@ public class AuthenticationService {
 
     // CONFIRMATION EMAIL
     public ResponseEntity<?> register(RegisterRequest request) {
-        if (repository.existsByEmail(request.getEmail())) {
+        if (repository.existsByEmailAndDeleted(request.getEmail(), false)) {
             return ResponseEntity.badRequest().body("Error: Email is already in use!");
         }
         var user = User.builder()
@@ -66,7 +66,7 @@ public class AuthenticationService {
         ConfirmationToken confirmationToken = new ConfirmationToken(user);
         confirmationTokenRepository.save(confirmationToken);
         senderService.sendSimpleEmail(user.getEmail(), "Complete Registration!", "To confirm your account, please click here : "
-                +"http://localhost:8081/api/confirm-account?token="+confirmationToken.getConfirmationToken());
+                +"http://localhost:8222/api/confirm-account?token="+confirmationToken.getConfirmationToken());
         System.out.println("Confirmation Token: " + confirmationToken.getConfirmationToken());
         return ResponseEntity.ok("Verify email by the link sent on your email address");
     }
@@ -179,7 +179,7 @@ public class AuthenticationService {
     public void forgotPassword(String email) throws MessagingException {
         User user = repository.findAllByEmail(email).get(0);
         String token = jwtService.generateTokenResetPsw(user);
-        String url = UriComponentsBuilder.fromHttpUrl("http://localhost:8081")
+        String url = UriComponentsBuilder.fromHttpUrl("http://localhost:8222")
                 .path("/api/resetPassword").queryParam("token", token).toUriString();
         triggerMail(email, url);
         var resetPsw = ResetPsw.builder()
