@@ -170,7 +170,7 @@ public class AuthenticationService {
 
     //SEND MAIL
     public void triggerMail(String mail, String token) throws MessagingException {
-        //TODO change "example@mail.com" to mail for send mail to the correct user
+        //TODO change "example@mail.com" to mail for send email to the correct user's email
         senderService.sendSimpleEmail(mail,
                 "Reset password", "For reset the password, please click on the link " +
                 token + " \n If you not request a reset password, ignore this email" );
