@@ -158,4 +158,9 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    public List<SimpleGrantedAuthority> extractRoles(String token) {
+        Claims claims = extractAllClaim(token);
+        return claims.get("roles", List.class);
+    }
 }
