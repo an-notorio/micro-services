@@ -1,5 +1,6 @@
 package com.example.student;
 
+import com.example.student.dto.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -49,5 +50,25 @@ public class StudentController {
             @PathVariable("school-id") Integer schoolId
     ) {
         return ResponseEntity.ok(service.findAllStudentsBySchool(schoolId));
+    }
+
+    @Operation(
+            summary = "Delete a student",
+            description = "delete a specific student using ID"
+    )
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
+        service.deleteStudent(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @Operation(
+            summary = "update a Student",
+            description = "update a student with new information"
+    )
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@RequestBody RegisterRequest registerRequest, @PathVariable Integer id, HttpServletRequest servletRequest) {
+        return service.updateStudent(registerRequest, id, servletRequest);
+
     }
 }
