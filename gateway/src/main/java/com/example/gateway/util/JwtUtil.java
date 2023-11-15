@@ -40,6 +40,7 @@ public class JwtUtil {
     public List<String> extractRoles(String token) {
         Claims claims = extractClaims(token);
         List<String> roles = new ArrayList<String>();
+        //Scorriamo tutti i ruoli che troviamo nei claim e utilizziamo substring per poterci tirare solo il ruolo per poi inserirlo in una nuova lista di String
         for(int i=0; i<claims.get("roles", List.class).size(); i++){
             roles.add(claims.get("roles", List.class).get(i).toString().substring(11,claims.get("roles", List.class).get(i).toString().length()-1));
         }

@@ -71,4 +71,9 @@ public class StudentController {
         return service.updateStudent(registerRequest, id, servletRequest);
 
     }
+
+    @DeleteMapping("/delete/bySchoolId/{school-id}")
+    public void deleteAllStudentsBySchoolId(@PathVariable("school-id") Integer schoolId){
+        service.deleteStudentBySchoolId(schoolId);
+    }
 }

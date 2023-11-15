@@ -1,6 +1,7 @@
 package com.example.school;
 
 import com.example.school.client.StudentClient;
+import com.example.school.dto.SchoolDto;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -15,8 +16,12 @@ public class SchoolService {
     private final SchoolRepository repository;
     private final StudentClient client;
 
-    public void saveSchool(School school) {
-        repository.save(school);
+    public void saveSchool(SchoolDto school) {
+        School schoolToSave = School.builder()
+                .name(school.getName())
+                .email(school.getEmail())
+                .build();
+        repository.save(schoolToSave);
     }
 
     public List<School> findAllSchools() {
@@ -42,5 +47,19 @@ public class SchoolService {
     public School findSchoolById(Integer schoolId) {
         return repository.findById(schoolId).orElse(new School()
         );
+    }
+
+    public void updateSchool(Integer schoolId, SchoolDto school){
+        repository.save(School.builder()
+                        .id(schoolId)
+                        .email(school.getEmail())
+                        .name(school.getName())
+                .build());
+    }
+
+    public void deleteSchool(Integer schoolId, HttpServletRequest request) {
+        repository.deleteById(schoolId);
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        client.deleteAllStudentsBySchoolId(schoolId, authHeader);
     }
 }

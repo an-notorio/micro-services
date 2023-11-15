@@ -3,6 +3,7 @@ package com.example.student;
 import com.example.student.client.SchoolClient;
 import com.example.student.dto.RegisterRequest;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -75,5 +76,10 @@ public class StudentService {
 
         }
         return new ResponseEntity<>("Student not present", HttpStatus.BAD_REQUEST);
+    }
+
+    @Transactional
+    public void deleteStudentBySchoolId(Integer schoolId){
+        repository.deleteBySchoolId(schoolId);
     }
 }
