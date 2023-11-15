@@ -17,7 +17,9 @@ spring:
           predicates:
             - Path=/api/students/**
           filters:
-            - AuthenticationFilter
+            - name: AuthenticationFilter
+              args:
+                role: ADMIN
         - id: schools
           uri: http://localhost:8070
           predicates:
@@ -27,7 +29,7 @@ spring:
         - id: authenticator
           uri: http://localhost:8081
           predicates:
-            - Path=/api/** , /demo/**
+            - Path=/api/**,/demo/**
 
 application:
   security:

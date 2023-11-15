@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -32,12 +33,16 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public Claims extractClaims(String token, String secretKey) {
+    public Claims extractClaims(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
     }
 
-    public List<String> extractRoles(String token, String secretKey) {
-        Claims claims = extractClaims(token, secretKey);
-        return claims.get("roles", List.class);
+    public List<String> extractRoles(String token) {
+        Claims claims = extractClaims(token);
+        List<String> roles = new ArrayList<String>();
+        for(int i=0; i<claims.get("roles", List.class).size(); i++){
+            roles.add(claims.get("roles", List.class).get(i).toString().substring(11,claims.get("roles", List.class).get(i).toString().length()-1));
+        }
+        return roles;
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
@@ -25,7 +27,12 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
+//            System.out.println(config.getRole().get(0));
+//            System.out.println(config.getRole().get(1));
+//            System.out.println(config.getRole().get(0));
+//            System.out.println(config.getRole());
             if (validator.isSecured.test(exchange.getRequest())) {
+
                 //header contains token or not
                 if (!exchange.getRequest().getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
                     throw new RuntimeException("missing authorization header");
@@ -34,6 +41,15 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                 if (authHeader != null && authHeader.startsWith("Bearer ")) {
                     authHeader = authHeader.substring(7);
                 }
+                if(config.getRole()!=null){
+                    List<String> userRoles = jwtUtil.extractRoles(authHeader);
+                    System.out.println(userRoles);
+                    if(!(userRoles.stream().anyMatch(config.role::contains))){
+                        System.out.println("invalid access!");
+                        throw new RuntimeException("unauthorized access to application");
+                    }
+                }
+
                 try {
                     //REST call to AUTH service
 //                    template.getForObject("http://authenticator//api/authenticate?token" + authHeader, String.class);
@@ -48,6 +64,14 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     }
 
     public static class Config {
+        private List<String> role;
 
+        public List<String> getRole() {
+            return role;
+        }
+
+        public void setRole(List<String> role) {
+            this.role = role;
+        }
     }
 }
