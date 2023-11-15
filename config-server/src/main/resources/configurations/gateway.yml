@@ -23,6 +23,14 @@ spring:
         - id: schools
           uri: http://localhost:8070
           predicates:
+            - Path=/api/schools/delete/**,/api/schools/update/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                role: ADMIN
+        - id: schools
+          uri: http://localhost:8070
+          predicates:
             - Path=/api/schools/**
           filters:
             - AuthenticationFilter
