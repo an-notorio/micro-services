@@ -85,9 +85,9 @@ public class UsersController {
             summary = "delete a USER",
             description = "It will perform a Soft Delete"
     )
-//    @Secured("USER")
+    @PreAuthorize("@securityService.hasPermission(#request, #userId)")
     @DeleteMapping("/delete/{userId}")
-    public ResponseEntity<?> delete(@PathVariable Integer userId) {
+    public ResponseEntity<?> delete(@PathVariable Integer userId, HttpServletRequest request) {
         service.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }

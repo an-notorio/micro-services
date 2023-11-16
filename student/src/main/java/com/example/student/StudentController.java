@@ -71,7 +71,10 @@ public class StudentController {
         return service.updateStudent(registerRequest, id, servletRequest);
 
     }
-
+    @Operation(
+            summary = "Delete all the students",
+            description = "Delete all the students from a school"
+    )
     @DeleteMapping("/delete/bySchoolId/{school-id}")
     public void deleteAllStudentsBySchoolId(@PathVariable("school-id") Integer schoolId){
         service.deleteStudentBySchoolId(schoolId);
