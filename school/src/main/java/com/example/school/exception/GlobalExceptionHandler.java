@@ -1,4 +1,4 @@
-package com.example.authenticator.exception;
+package com.example.school.exception;
 
 import jakarta.ws.rs.BadRequestException;
 import lombok.extern.slf4j.Slf4j;

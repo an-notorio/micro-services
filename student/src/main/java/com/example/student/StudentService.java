@@ -29,17 +29,13 @@ public class StudentService {
     }
 
     public ResponseEntity<?> saveStudent(Student student, HttpServletRequest request){
-        try{
-            final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-            School school= client.findSchoolBySchoolId(student.getSchoolId(), authHeader);
-            if(school.getId().describeConstable().isPresent()){
-                repository.save(student);
-                return ResponseEntity.ok("Student saved");
-            }
-            else{
-                return new ResponseEntity<>("School Id not found", HttpStatus.BAD_REQUEST);
-            }
-        }catch (Exception x){
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        School school= client.findSchoolBySchoolId(student.getSchoolId(), authHeader);
+        if(school.getId()!= null){
+            repository.save(student);
+            return ResponseEntity.ok("Student saved");
+        }
+        else{
             return new ResponseEntity<>("School Id not found", HttpStatus.BAD_REQUEST);
         }
 
