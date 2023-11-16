@@ -1,6 +1,5 @@
-[Documentation](#microservices-demo-project) - [Technologies](#technologies-used) - [Roadmap](#future-releases) - [License](#license) 
-
 # Microservices Demo Project
+[Documentation](#microservices-demo-project) - [Technologies](#technologies-used) - [Roadmap](#future-releases) - [License](#license)
 
 This repository contains a demo project showcasing a microservices-based application. The project consists of an API Gateway, Config Server, Discovery Server, and three microservices: Student, School and Authenticator.
 With this project you can manage the school and student in a hypothetical region zone. With a role based access, this project use different technologies that will be explained in the next section.
@@ -215,13 +214,19 @@ In the future there will be new implementations in the project including:
 
 - #### Load Balancing System
 
-*the load balancer is a technology used to distribute the workload between different servers or applications, improving system performance, scalability and availability.*
+*The load balancer is a technology used to distribute the workload between different servers or applications, improving system performance, scalability and availability.*
 
 - #### Circuit breaker
 
 *The circuit breaker monitors the flow of traffic between services and stops requests to services that do not respond or that respond slowly or with errors. 
 When the circuit breaker interrupts a request, it returns an error to the client, indicating that the service is unavailable. 
 In this way, the circuit breaker prevents system failure and ensures that client requests are handled efficiently.*
+
+- #### Elasticsearch
+
+*Elasticsearch is a distributed search and analytics engine based on Apache Lucene. Elasticsearch can handle all types of data, including textual, numeric, geospatial, structured, and unstructured.
+Elasticsearch was designed to be fast, scalable, and easy to use. Thanks to its RESTful API, Elasticsearch can be easily integrated with other applications and tools. 
+Furthermore, Elasticsearch is highly configurable and customizable thanks to its modular architecture and plugin ecosystem.*
 
 - #### Code improvement
 
