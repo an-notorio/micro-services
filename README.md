@@ -67,7 +67,11 @@ In other words, Spring Cloud provides an easy way to implement common patterns i
 
 - [Spring Security](https://spring.io/projects/spring-security)
 - [Spring Framework Email](https://docs.spring.io/spring-framework/reference/integration/email.html)
-- 
+- [Spring Data JPA](https://spring.io/projects/spring-data-jpa)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Project Lombok](https://projectlombok.org/)
+- [Bean Validation](https://beanvalidation.org/)
+- [Actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html)
 
 A small description of these tools will take place in the sections below. The official documentation can be found by clicking on them.
 
@@ -162,6 +166,14 @@ In particular, Spring Security offers a JWT implementation based on Spring Secur
 In summary, Spring Security and JWT are two technologies that can be used together to provide advanced security features to Java applications.
 
 The project uses token-based authentication and therefore chose the JSON Web Token (JWT).
+
+*For the implementation is used java-jwt and in particular*
+
+|  JWS  |          Algorithm          |    Description    |
+|:-----:|:------------------------------:|:-----------------:|
+| HS256 |          HMAC256          | HMAC with SHA-256 |
+
+For more information about JWT algorithm I suggest this [article](https://auth0.com/blog/json-web-token-signing-algorithms-overview/) of *Sebastian Peyrott* on [auth0.com/blog](https://auth0.com/blog/)
 
 There are several reasons why it is convenient to use JWT. First, JWT is an open and widely used standard, meaning it is supported by many development libraries and frameworks. 
 Furthermore, JWT is easy to implement and use, and is compatible with many platforms and programming languages.
