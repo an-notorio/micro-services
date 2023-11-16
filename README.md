@@ -19,6 +19,12 @@ The School Microservice manages school-related data and operations, including ad
 
 The Authenticator service manages authentication and authorization along with login, registration, modification and deletion of users.
 
+### Exception Handling
+
+In the project has an exception handling system
+Exception handling is a programming technique that allows you to handle errors and exceptions that occur during the execution of a program. 
+In practice, exception handling allows you to prevent the program from crashing in the event of errors by providing a mechanism to handle errors and continue the execution of the program.
+
 ## Technologies Used
 
 This project use Java LTS version 17 with Springboot 3.0.5.
