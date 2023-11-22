@@ -1,0 +1,88 @@
+#eureka:
+# client:
+#  register-with-eureka: false
+server:
+  port: 8222
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: students
+          uri: http://student:8090
+          predicates:
+            - Path=/api/students/update/**,/api/students/delete/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                role: ADMIN
+        - id: students
+          uri: http://student:8090
+          predicates:
+            - Path=/api/students/**
+          filters:
+            - AuthenticationFilter
+        - id: schools
+          uri: http://school:8070
+          predicates:
+            - Path=/api/schools/delete/**,/api/schools/update/**
+          filters:
+            - name: AuthenticationFilter
+              args:
+                role: ADMIN
+        - id: schools
+          uri: http://school:8070
+          predicates:
+            - Path=/api/schools/**
+          filters:
+            - AuthenticationFilter
+        - id: authenticator
+          uri: http://authenticator:8081
+          predicates:
+            - Path=/api/**,/demo/**
+
+application:
+  security:
+    jwt:
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000
+      secret-key: 44993b7ba1f547e5c2dce92e3f341c63e1631793a7e8490e53a2c0d4b2613f17
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://discovery:8761/eureka
+
+springdoc:
+  enable-native-support: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    config-url: /v3/api-docs/swagger-config
+    urls:
+      - url: /v3/api-docs
+        name: API Gateway Service
+        primaryName: API Gateway Service
+      - url: /students/v3/api-docs
+        name: Students Service
+        primaryName: Students Service
+      - url: /schools/v3/api-docs
+        name: Schools Service
+        primaryName: Schools Service
+      - url: /authenticator/v3/api-docs
+        name: Authenticator Service
+        primaryName: Authenticator Service

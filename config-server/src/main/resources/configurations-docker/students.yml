@@ -1,0 +1,44 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://discovery:8761/eureka
+
+
+server:
+  port: 8090
+spring:
+  application:
+    name: students
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres:5433/students
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+application:
+  config:
+    schools-url: http://gateway:8222/api/schools
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+
+openapi:
+  service:
+    title: students doc #title that you will want to display in the swagger ui
+    version: 1.0.0
+    url: http://gateway:8222 #api gateway url
+springdoc:
+  api-docs:
+    path: /students/v3/api-docs
+  swagger-ui:
+    path: /students/swagger-ui.html

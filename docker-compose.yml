@@ -1,18 +1,137 @@
 services:
-  postgresql:
-    container_name: postgresql
+  ## Postgres Docker Compose Config
+  postgres-authenticator:
+    container_name: postgres-authenticator
     image: postgres
     environment:
+      POSTGRES_DB: login
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - ./postgres-authenticator:/data/postgres
+    expose:
+      - "5433"
     ports:
-      - "5432:5432"
-    networks:
-      - postgres
+      - "5433:5433"
+    command: -p 5433
+#    networks:
+#      - postgres
     restart: unless-stopped
+
+  postgres-school:
+    container_name: postgres-school
+    image: postgres
+    environment:
+      POSTGRES_DB: schools
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres-school:/data/postgres
+    expose:
+      - "5433"
+    ports:
+      - "5433-5433"
+    restart: unless-stopped
+
+  postgres-student:
+    container_name: postgres-student
+    image: postgres
+    environment:
+      POSTGRES_DB: students
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /data/postgres
+    volumes:
+      - ./postgres-student:/data/postgres
+    expose:
+      - "5433"
+    ports:
+      - "5433-5433"
+    restart: unless-stopped
+
+## Eureka Server
+  discovery-server:
+    image: anotorio/discovery:latest
+    container_name: discovery
+    pull_policy: always
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - zipkin
+      - config-server
+
+## API Gateway
+  gateway:
+    image: anotorio/gateway:latest
+    container_name: gateway
+    pull_policy: always
+    ports:
+      - "8222:8222"
+    expose:
+      - "8222"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY= TRACE
+    depends_on:
+      - discovery-server
+      - zipkin
+      - config-server
+
+## Authenticator Docker Compose Config
+  authenticator:
+    image: anotorio/authenticator:latest
+    container_name: authenticator
+    pull_policy: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-authenticator:5433/login
+    depends_on:
+      - discovery-server
+      - gateway
+      - postgres-authenticator
+      - config-server
+
+## School Docker Compose Config
+  school:
+    image: anotorio/school:latest
+    container_name: school
+    pull_policy: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-school:5433/schools
+    depends_on:
+      - discovery-server
+      - gateway
+      - postgres-school
+      - config-server
+
+## Student Docker Compose Config
+  student:
+    image: anotorio/student:latest
+    container_name: student
+    pull_policy: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-student:5433/students
+    depends_on:
+      - discovery-server
+      - gateway
+      - postgres-student
+      - config-server
+
+## Config-Server Docker Compose Config
+  config-server:
+    image: anotorio/config-server:latest
+    container_name: config-server
+    pull_policy: always
+    environment:
+      - SPING_PROFILES_ACTIVE=docker
+
+  ## PgAdmin
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4
@@ -27,20 +146,22 @@ services:
     networks:
       - postgres
     restart: unless-stopped
+
+## Zipkin
   zipkin:
     container_name: zipkin
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
-    networks:
-      - zipkin
+#    networks:
+#      - zipkin
 
-networks:
-  postgres:
-    driver: bridge
-  zipkin:
-    driver: bridge
-
-volumes:
-  postgres:
-  pgadmin:
+#networks:
+#  postgres:
+#    driver: bridge #allow communication between container inside a host Docker
+#  zipkin:
+#    driver: bridge #allow communication between container inside a host Docker
+#
+#volumes:
+#  postgres:
+#  pgadmin:
