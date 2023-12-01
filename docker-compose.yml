@@ -15,8 +15,8 @@ services:
     ports:
       - "5433:5433"
     command: -p 5433
-#    networks:
-#      - postgres
+    networks:
+      - postgres
     restart: unless-stopped
 
   postgres-school:
@@ -130,7 +130,10 @@ services:
     pull_policy: always
     environment:
       - SPING_PROFILES_ACTIVE=docker
-
+    ports:
+      - "8888:8888"
+    expose:
+      - "8888"
   ## PgAdmin
 #  pgadmin:
 #    container_name: pgadmin
@@ -153,14 +156,14 @@ services:
     image: openzipkin/zipkin
     ports:
       - "9411:9411"
-#    networks:
-#      - zipkin
+    networks:
+      - zipkin
 
-#networks:
-#  postgres:
-#    driver: bridge #allow communication between container inside a host Docker
-#  zipkin:
-#    driver: bridge #allow communication between container inside a host Docker
+networks:
+  postgres:
+    driver: bridge #allow communication between container inside a host Docker
+  zipkin:
+    driver: bridge #allow communication between container inside a host Docker
 #
 #volumes:
 #  postgres:
