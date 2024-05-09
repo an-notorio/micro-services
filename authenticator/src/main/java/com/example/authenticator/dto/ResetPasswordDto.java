@@ -8,4 +8,12 @@ import lombok.Data;
 public class ResetPasswordDto {
     private String password;
     private String repeatPassword;
+
+    public ResetPasswordDto() {
+    }
+
+    public ResetPasswordDto(String password, String repeatPassword) {
+        this.password = password;
+        this.repeatPassword = repeatPassword;
+    }
 }
